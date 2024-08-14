@@ -4,7 +4,9 @@
   "description": "A book reviewer communit",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev"
+    "dev": "next dev",
+    "lint:prettier:check": "prettier . --check",
+    "lint:prettier:fix": "prettier . --write"
   },
   "author": "matheusRodrigues73",
   "license": "MIT",
@@ -16,6 +18,7 @@
   "devDependencies": {
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.41",
+    "prettier": "^3.3.3",
     "tailwindcss": "^3.4.10"
   }
 }
