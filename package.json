@@ -7,6 +7,9 @@
     "dev": "next dev",
     "test": "jest",
     "test:watch": "jest --watch",
+    "services:up": "docker compose -f infra/compose.yaml up -d",
+    "services:stop": "docker compose -f infra/compose.yaml stop",
+    "services:down": "docker compose -f infra/compose.yaml down",
     "lint:prettier:check": "prettier . --check",
     "lint:prettier:fix": "prettier . --write"
   },
@@ -14,6 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "next": "^14.2.5",
+    "pg": "^8.12.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
