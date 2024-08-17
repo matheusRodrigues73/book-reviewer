@@ -11,7 +11,9 @@
     "services:stop": "docker compose -f infra/compose.yaml stop",
     "services:down": "docker compose -f infra/compose.yaml down",
     "lint:prettier:check": "prettier . --check",
-    "lint:prettier:fix": "prettier . --write"
+    "lint:prettier:fix": "prettier . --write",
+    "migrations:create": "node-pg-migrate -m infra/migrations create",
+    "migrations:up": "node-pg-migrate -m infra/migrations up"
   },
   "author": "matheusRodrigues73",
   "license": "MIT",
@@ -23,7 +25,9 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
+    "dotenv": "^16.4.5",
     "jest": "^29.7.0",
+    "node-pg-migrate": "^7.6.1",
     "postcss": "^8.4.41",
     "prettier": "^3.3.3",
     "tailwindcss": "^3.4.10"
