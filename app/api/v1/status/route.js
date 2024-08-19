@@ -8,7 +8,7 @@ export async function GET(request) {
   const responseMaxConnections = await database.query("SHOW max_connections;");
   const maxConnections = responseMaxConnections.rows[0].max_connections;
   const responseOpenedConnections = await database.query(
-    "SELECT count(*) FROM pg_stat_activity WHERE datname = 'local_db';",
+    `SELECT count(*) FROM pg_stat_activity WHERE datname = '${process.env.POSTGRES_DB}';`,
   );
   const openedConnections = responseOpenedConnections.rows[0].count;
   return NextResponse.json(
