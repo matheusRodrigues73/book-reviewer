@@ -1,9 +1,10 @@
+import database from "infra/database";
 import { NextResponse } from "next/server";
 import pgMigrate from "node-pg-migrate";
 
-async function loadMigrations(method) {
+async function loadMigrations(client, method) {
   const defaultConfig = {
-    databaseUrl: process.env.DATABASE_URL,
+    dbClient: client,
     dir: "infra/migrations",
     dryRun: true,
     direction: "up",
@@ -17,15 +18,32 @@ async function loadMigrations(method) {
 }
 
 export async function GET(request) {
-  const migrations = await loadMigrations();
-
-  return NextResponse.json(migrations, { status: 200 });
+  let client;
+  try {
+    client = await database.clientConnection();
+    const migrations = await loadMigrations(client);
+    return NextResponse.json(migrations, { status: 200 });
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    client.end();
+  }
 }
 
 export async function POST(request) {
-  const migrations = await loadMigrations("post");
-  if (migrations.length === 0) {
-    return NextResponse.json(migrations, { status: 200 });
+  let client;
+  try {
+    client = await database.clientConnection();
+    const migrations = await loadMigrations(client, "post");
+    if (migrations.length === 0) {
+      return NextResponse.json(migrations, { status: 200 });
+    }
+    return NextResponse.json(migrations, { status: 201 });
+  } catch (error) {
+    console.log(error);
+    return error;
+  } finally {
+    client.end();
   }
-  return NextResponse.json(migrations, { status: 201 });
 }
