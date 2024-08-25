@@ -1,5 +1,4 @@
 const nextJest = require("next/jest");
-const { root } = require("postcss");
 
 const createJestConfig = nextJest({
   dir: "./",

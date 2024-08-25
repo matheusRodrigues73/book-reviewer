@@ -27,7 +27,9 @@ async function clientConnection() {
   return client;
 }
 
-export default {
+const database = {
   query,
   clientConnection,
 };
+
+export default database;

@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default () => {
+function Home() {
   return (
     <main className="flex flex-col justify-center items-center h-full bg-yellow-200">
       <h1 className="text-3xl">Building our Project</h1>
@@ -16,4 +16,5 @@ export default () => {
       </Link>
     </main>
   );
-};
+}
+export default Home;

@@ -1,9 +1,9 @@
 import retry from "async-retry";
 
 async function waitForServices() {
-  await waitForWebServer(Date.now());
+  await waitForWebServer();
 
-  async function waitForWebServer(startedAt) {
+  async function waitForWebServer() {
     return retry(fetchStatusEndpoint, {
       retries: 100,
       maxTimeout: 1000,
@@ -19,4 +19,6 @@ async function waitForServices() {
   }
 }
 
-export default { waitForServices };
+const orchestrator = { waitForServices };
+
+export default orchestrator;

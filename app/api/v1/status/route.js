@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import database from "infra/database";
 
+// eslint-disable-next-line no-unused-vars
 export async function GET(request) {
   const updatedAt = new Date().toISOString();
   const responseVersion = await database.query("SHOW server_version;");
