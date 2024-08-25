@@ -17,6 +17,7 @@ async function loadMigrations(client, method) {
   return await pgMigrate(defaultConfig);
 }
 
+// eslint-disable-next-line no-unused-vars
 export async function GET(request) {
   let client;
   try {
@@ -31,6 +32,7 @@ export async function GET(request) {
   }
 }
 
+// eslint-disable-next-line no-unused-vars
 export async function POST(request) {
   let client;
   try {
