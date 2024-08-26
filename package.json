@@ -13,6 +13,7 @@
     "lint:prettier:check": "prettier . --check",
     "lint:prettier:fix": "prettier . --write",
     "lint:eslint:check": "next lint --dir .",
+    "lint:secretlint:check": "secretlint .",
     "migrations:create": "node-pg-migrate -m infra/migrations create",
     "migrations:up": "node-pg-migrate -m infra/migrations up",
     "wait-for-postgres": "node infra/scripts/wait-for-postgres.js",
