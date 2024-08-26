@@ -1,4 +1,5 @@
 import database from "infra/database";
+import pgMigrate from "node-pg-migrate";
 
 async function status() {
   const updatedAt = new Date().toISOString();
@@ -18,8 +19,24 @@ async function status() {
   };
 }
 
+async function migrations(client, method) {
+  const defaultConfig = {
+    dbClient: client,
+    dir: "infra/migrations",
+    dryRun: true,
+    direction: "up",
+    migrationsTable: "pgmigrations",
+    verbose: true,
+  };
+  if (method === "post") {
+    return await pgMigrate({ ...defaultConfig, dryRun: false });
+  }
+  return await pgMigrate(defaultConfig);
+}
+
 const Api = {
   status,
+  migrations,
 };
 
 export default Api;
