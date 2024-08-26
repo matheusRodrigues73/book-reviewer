@@ -1,17 +1,10 @@
 import { NextResponse } from "next/server";
-import database from "infra/database";
+import Api from "modules/Api.js";
 
 // eslint-disable-next-line no-unused-vars
 export async function GET(request) {
-  const updatedAt = new Date().toISOString();
-  const responseVersion = await database.query("SHOW server_version;");
-  const version = responseVersion.rows[0].server_version;
-  const responseMaxConnections = await database.query("SHOW max_connections;");
-  const maxConnections = responseMaxConnections.rows[0].max_connections;
-  const responseOpenedConnections = await database.query(
-    `SELECT count(*) FROM pg_stat_activity WHERE datname = '${process.env.POSTGRES_DB}';`,
-  );
-  const openedConnections = responseOpenedConnections.rows[0].count;
+  const { updatedAt, version, maxConnections, openedConnections } =
+    await Api.status();
   return NextResponse.json(
     {
       updated_at: updatedAt,
