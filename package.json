@@ -16,7 +16,8 @@
     "migrations:create": "node-pg-migrate -m infra/migrations create",
     "migrations:up": "node-pg-migrate -m infra/migrations up",
     "wait-for-postgres": "node infra/scripts/wait-for-postgres.js",
-    "prepare": "husky"
+    "prepare": "husky",
+    "commit": "cz"
   },
   "author": "matheusRodrigues73",
   "license": "MIT",
@@ -32,7 +33,9 @@
   "devDependencies": {
     "@commitlint/cli": "^19.4.0",
     "autoprefixer": "10.4.20",
+    "commitizen": "4.3.0",
     "concurrently": "8.2.2",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "8.57.0",
     "eslint-config-next": "14.2.6",
     "eslint-config-prettier": "^9.1.0",
@@ -43,5 +46,10 @@
     "postcss": "8.4.41",
     "prettier": "3.3.3",
     "tailwindcss": "3.4.10"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
