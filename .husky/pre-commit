@@ -1,1 +1,2 @@
 npx secretlint .
+npm audit --omit dev

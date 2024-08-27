@@ -1,0 +1,33 @@
+name: Audit
+
+on: pull_request
+
+jobs:
+  npm-audit:
+    name: Npm-Audit
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+
+      - run: npm ci
+
+      - run: npm audit --omit dev
+  secretlint:
+    name: Secretlint
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "lts/hydrogen"
+
+      - run: npm ci
+
+      - run: npm run lint:secretlint:check
