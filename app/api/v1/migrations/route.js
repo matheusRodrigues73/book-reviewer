@@ -11,7 +11,7 @@ export async function GET(request) {
     return NextResponse.json(pendentsMigrations, { status: 200 });
   } catch (error) {
     console.log(error);
-    return error;
+    return NextResponse.json({ error: error }, { status: 500 });
   } finally {
     client.end();
   }
@@ -29,7 +29,7 @@ export async function POST(request) {
     return NextResponse.json(migratedMigrations, { status: 201 });
   } catch (error) {
     console.log(error);
-    return error;
+    return NextResponse.json({ error: error }, { status: 500 });
   } finally {
     client.end();
   }
