@@ -20,6 +20,7 @@ async function status() {
 }
 
 async function migrations(client, method) {
+  console.log("error here");
   const defaultConfig = {
     dbClient: client,
     dir: "infra/migrations",
