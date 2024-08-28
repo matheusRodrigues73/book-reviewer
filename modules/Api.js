@@ -1,6 +1,6 @@
 import database from "infra/database";
 import pgMigrate from "node-pg-migrate";
-import { join } from "node:path";
+import { resolve } from "node:path";
 
 async function status() {
   const updatedAt = new Date().toISOString();
@@ -20,19 +20,28 @@ async function status() {
   };
 }
 
-async function migrations(client, method) {
-  const defaultConfig = {
-    dbClient: client,
-    dir: join("infra", "migrations"),
-    dryRun: true,
-    direction: "up",
-    migrationsTable: "pgmigrations",
-    verbose: true,
-  };
-  if (method === "post") {
-    return await pgMigrate({ ...defaultConfig, dryRun: false });
+async function migrations(method) {
+  let client;
+  try {
+    client = await database.clientConnection();
+    const defaultConfig = {
+      dbClient: client,
+      dir: resolve("infra", "migrations"),
+      dryRun: true,
+      direction: "up",
+      migrationsTable: "pgmigrations",
+      verbose: true,
+    };
+    if (method === "post") {
+      return await pgMigrate({ ...defaultConfig, dryRun: false });
+    }
+    return await pgMigrate(defaultConfig);
+  } catch (error) {
+    console.error;
+    return error;
+  } finally {
+    client.end();
   }
-  return await pgMigrate(defaultConfig);
 }
 
 const Api = {
