@@ -1,5 +1,6 @@
 import database from "infra/database";
 import pgMigrate from "node-pg-migrate";
+import { join } from "node:path";
 
 async function status() {
   const updatedAt = new Date().toISOString();
@@ -20,10 +21,9 @@ async function status() {
 }
 
 async function migrations(client, method) {
-  console.log("error here");
   const defaultConfig = {
     dbClient: client,
-    dir: "infra/migrations",
+    dir: join("infra", "migrations"),
     dryRun: true,
     direction: "up",
     migrationsTable: "pgmigrations",
