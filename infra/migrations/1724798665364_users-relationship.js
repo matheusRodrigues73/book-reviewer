@@ -11,10 +11,10 @@ exports.shorthands = undefined;
 exports.up = (pgm) => {
   pgm.createType("gender", ["M", "F", "NoInfo"]);
   pgm.createTable("users", {
-    id: { type: "varchar(100)", notNull: true, unique: true },
-    username: { type: "varchar(70)", notNull: true },
-    email: { type: "varchar(80)", notNull: true, unique: true },
-    password: { type: "varchar(100)", notNull: true },
+    id: { type: "varchar(20)", notNull: true, unique: true },
+    username: { type: "varchar(25)", notNull: true },
+    email: { type: "varchar(60)", notNull: true, unique: true },
+    hash: { type: "varchar(100)", notNull: true },
     gender: { type: "gender", notNull: true },
   });
 };
