@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function inputTextCheck() {
+export default function useCheckPassword() {
   const [passwordLength, setPasswordLength] = useState("error");
   const [specialCharacter, setSpecialCharacter] = useState("error");
   const [numberCharacter, setNumberCharacter] = useState("error");
@@ -34,7 +34,7 @@ export default function inputTextCheck() {
       setCheckState(inputText.length >= 8 && inputText.length <= 20, 0),
     );
     setSpecialCharacter(() =>
-      setCheckState(inputText.match(/[-'\/`~!#*$@_%+=.,^&(){}\[\]|;:"<>?]/), 1),
+      setCheckState(inputText.match(/[-'/`~!#*$@_%+=.,^&(){}[\]|;:"<>?]/), 1),
     );
     setNumberCharacter(() => setCheckState(inputText.match(/\d/), 2));
     setUppercaseLetter(() => setCheckState(inputText.match(/[A-Z]/), 3));

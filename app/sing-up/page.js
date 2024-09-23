@@ -1,6 +1,7 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 import { useState } from "react";
-import checkPassword from "./checks/checkPassword.js";
+import checkPassword from "./checks/useCheckPassword.js";
 import PasswordChecks from "./checks/PasswordChecks.js";
 import ChecksContext from "./checks/ChecksContext.js";
 import checkEmail from "./checks/checkEmail.js";
@@ -9,7 +10,7 @@ import checkUsername from "./checks/checkUsername.js";
 import checkGender from "./checks/checkGender.js";
 import saveUser from "./submit/saveUser.js";
 
-export default function singUp() {
+export default function SingUp() {
   const [checks, setChecks] = useState("hidden");
   const {
     passwordLength,

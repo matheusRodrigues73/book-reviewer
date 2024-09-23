@@ -1,6 +1,6 @@
 import checkEmail from "../checks/checkEmail";
 import checkPasswordAgain from "../checks/checkVerifyPassword";
-import inputTextCheck from "../checks/checkPassword";
+import inputTextCheck from "../checks/useCheckPassword";
 
 export default function verifyInputState(
   usernameState,
