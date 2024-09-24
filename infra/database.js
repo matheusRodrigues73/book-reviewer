@@ -27,25 +27,9 @@ async function clientConnection() {
   return client;
 }
 
-async function storeUser({ id, username, email, gender, hash }) {
-  let client;
-  try {
-    client = await clientConnection();
-    await client.query(
-      `INSERT INTO users VALUES (${id}, ${username}, ${email}, ${gender}, ${hash})`,
-    );
-  } catch (err) {
-    console.log(err);
-    return new Error(err);
-  } finally {
-    await client.end();
-  }
-}
-
 const database = {
   query,
   clientConnection,
-  storeUser,
 };
 
 export default database;
