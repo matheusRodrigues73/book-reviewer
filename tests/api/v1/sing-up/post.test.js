@@ -22,6 +22,8 @@ describe('POST "api/v1/sing-up"', () => {
         }),
       });
       expect(response.status).toBe(201);
+      const responseBody = await response.json();
+      expect(responseBody.username).toBe("random");
     });
   });
 });

@@ -1,25 +1,24 @@
 import checkEmail from "../checks/checkEmail";
+import checkPassword from "../checks/checkPassword";
 import checkPasswordAgain from "../checks/checkVerifyPassword";
-import inputTextCheck from "../checks/useCheckPassword";
 
-export default function verifyInputState(
+export default function verifyInputsState(
   usernameState,
   emailState,
   passwordState,
   checkPasswordState,
   genderState,
 ) {
-  const { checkAllPassword, textCheck } = inputTextCheck();
-  textCheck(passwordState);
+  const { verifyAllRequirements } = checkPassword(passwordState);
   if (usernameState === "") {
     document.querySelector("#username").focus();
     return false;
   }
-  if (checkEmail(emailState)) {
+  if (checkEmail(emailState) === "error") {
     document.querySelector("#email").focus();
     return false;
   }
-  if (checkAllPassword === "error") {
+  if (verifyAllRequirements === false) {
     document.querySelector("#password").focus();
     return false;
   }

@@ -1,18 +1,21 @@
-import database from "infra/database";
-import User from "modules/User";
+import verifyInputsState from "./verifyInputsState";
 
-export default function submitNewUser({
+export default async function submitNewUser({
   username,
   email,
   password,
   verifyPassword,
   gender,
 }) {
-  if (verifyPassword(username, email, password, verifyPassword, gender)) {
-    console.log("save");
-    const hash = User.makeNewHash(password);
-    const user = new User({ username, email, hash, gender });
-    database.storeUser(user);
+  if (verifyInputsState(username, email, password, verifyPassword, gender)) {
+    await fetch("http://localhost:3000/api/v1/sing-up", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ username, email, password, gender }),
+    });
+    alert("ok");
   } else {
     console.log("no");
   }

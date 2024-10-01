@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 import { useState } from "react";
-import checkPassword from "./checks/useCheckPassword.js";
+import useCheckPassword from "./checks/useCheckPassword.js";
 import PasswordChecks from "./checks/PasswordChecks.js";
 import ChecksContext from "./checks/ChecksContext.js";
 import checkEmail from "./checks/checkEmail.js";
@@ -16,12 +16,12 @@ export default function SingUp() {
     passwordLength,
     specialCharacter,
     numberCharacter,
-    uppercaseLetter,
-    lowercaseLetter,
+    uppercaseCharacter,
+    lowercaseCharacter,
     whiteSpace,
     checkAllRequirements,
-    textCheck,
-  } = checkPassword();
+    checkPasswordText,
+  } = useCheckPassword();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -65,7 +65,7 @@ export default function SingUp() {
             className={"w-full px-1 py-0.5 rounded text-slate-700 text-xl"}
             value={password}
             onChange={(ev) => {
-              textCheck(ev.target.value);
+              checkPasswordText(ev.target.value);
               setPassword(ev.target.value);
             }}
             onFocus={() => {
@@ -81,8 +81,8 @@ export default function SingUp() {
               passwordLength,
               specialCharacter,
               numberCharacter,
-              uppercaseLetter,
-              lowercaseLetter,
+              uppercaseCharacter,
+              lowercaseCharacter,
               checkAllRequirements,
             }}
           >

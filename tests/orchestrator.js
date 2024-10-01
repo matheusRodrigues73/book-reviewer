@@ -1,6 +1,5 @@
 import retry from "async-retry";
 import database from "infra/database";
-import { exec } from "node:child_process";
 
 async function waitForServices() {
   await waitForWebServer();
@@ -34,11 +33,12 @@ async function waitForMigrations() {
       minTimeout: 500,
     });
     async function runMigrations() {
-      exec("npm run migrations:up", (error, stdout) => {
-        if (stdout.search("Migrations complete!") === -1) {
-          return new Error();
-        }
+      const response = await fetch("http://localhost:3000/api/v1/migrations", {
+        method: "POST",
       });
+      if (!response.ok) {
+        return new Error();
+      }
     }
   }
 }
