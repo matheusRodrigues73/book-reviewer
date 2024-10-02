@@ -8,7 +8,7 @@ export default async function submitNewUser({
   gender,
 }) {
   if (verifyInputsState(username, email, password, verifyPassword, gender)) {
-    await fetch("http://localhost:3000/api/v1/sing-up", {
+    await fetch(process.env.MIGRATIONS_ENDPOINT, {
       method: "POST",
       headers: {
         "content-type": "application/json",
