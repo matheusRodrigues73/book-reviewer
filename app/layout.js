@@ -13,7 +13,9 @@ export default function RootLayout({ children }) {
             <Link href="/explorar">Explorar</Link>
           </nav>
         </header>
-        {children}
+        <main className="flex flex-col justify-center items-center h-full bg-yellow-200">
+          {children}
+        </main>
       </body>
     </html>
   );
