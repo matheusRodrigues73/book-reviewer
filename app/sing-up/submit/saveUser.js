@@ -1,4 +1,8 @@
+"use server";
+
+import sendToAPI from "infra/sendToAPI";
 import verifyInputsState from "./verifyInputsState";
+import { redirect } from "next/navigation";
 
 export default async function submitNewUser({
   username,
@@ -7,16 +11,19 @@ export default async function submitNewUser({
   verifyPassword,
   gender,
 }) {
-  if (verifyInputsState(username, email, password, verifyPassword, gender)) {
-    await fetch(process.env.MIGRATIONS_ENDPOINT, {
+  let response;
+  try {
+    verifyInputsState(username, email, password, verifyPassword, gender);
+    response = await sendToAPI("/sing-up", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, email, password, gender }),
     });
-    alert("ok");
-  } else {
-    console.log("no");
+  } catch (err) {
+    throw new Error(err);
+  }
+
+  if (response?.status === 201) {
+    redirect("/");
   }
 }

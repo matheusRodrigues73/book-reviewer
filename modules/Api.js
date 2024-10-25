@@ -38,7 +38,7 @@ async function migrations(method) {
     return await pgMigrate(defaultConfig);
   } catch (error) {
     console.error;
-    return error;
+    throw error;
   } finally {
     client.end();
   }

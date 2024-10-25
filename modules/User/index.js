@@ -10,8 +10,20 @@ export default class User {
     this.gender = gender;
   }
   async storeUser() {
-    await database.query(
-      `INSERT INTO users VALUES ('${this.id}', '${this.username}', '${this.email}', '${this.hash}', '${this.gender}');`,
-    );
+    try {
+      await database.query(
+        `INSERT INTO users VALUES ('${this.id}', '${this.username}', '${this.email}', '${this.hash}', '${this.gender}');`,
+      );
+    } catch (error) {
+      if (error.message.match("email")) {
+        console.log("test");
+        throw new Error("email");
+      } else if (error.message.match("id")) {
+        this.id = createId();
+        return await this.storeUser();
+      } else {
+        throw error;
+      }
+    }
   }
 }

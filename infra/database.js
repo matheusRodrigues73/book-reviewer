@@ -8,7 +8,8 @@ async function query(query) {
     return response;
   } catch (error) {
     console.log(error);
-    return new Error(error);
+    console.log("test");
+    throw error;
   } finally {
     await client.end();
   }
