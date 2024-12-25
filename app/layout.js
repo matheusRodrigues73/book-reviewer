@@ -8,14 +8,12 @@ export default function RootLayout({ children }) {
         <header className="flex items-center gap-6 h-12 p-1 bg-yellow-950 text-white">
           <h1 className="h-full text-2xl">Book Review</h1>
           <nav className="flex items-center gap-2 h-full">
-            <Link href="/">Relevantes</Link>
-            <Link href="/recentes">Recentes</Link>
-            <Link href="/explorar">Explorar</Link>
+            <Link href="/">Relevent</Link>
+            <Link href="/recentes">Recent</Link>
+            <Link href="/explorar">libraly</Link>
           </nav>
         </header>
-        <main className="flex flex-col justify-center items-center h-full bg-yellow-200">
-          {children}
-        </main>
+        {children}
       </body>
     </html>
   );
