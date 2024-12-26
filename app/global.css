@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.inputError {
+  border: 2px solid #ff7171;
+}
+.success {
+  color: #71ff71;
+}
+.error {
+  color: #ff7171;
+}
