@@ -16,7 +16,6 @@ export default class User {
       );
     } catch (error) {
       if (error.message.match("email")) {
-        console.log("test");
         throw new Error("email");
       } else if (error.message.match("id")) {
         this.id = createId();
