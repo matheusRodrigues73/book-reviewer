@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import database from "infra/database";
-import { InternalServerError } from "infra/errors";
+import {
+  treatInternalServerError,
+  treatInvalidMethodError,
+} from "infra/treatErrors";
 
 // eslint-disable-next-line no-unused-vars
 export async function GET(request) {
@@ -30,11 +33,31 @@ export async function GET(request) {
       { status: 200 },
     );
   } catch (error) {
-    let InternalError = new InternalServerError({ cause: error });
-    console.log("Error inside catch at status controller:");
-    console.error(InternalError);
-    return NextResponse.json(InternalError, {
-      status: InternalError.statusCode,
+    return treatInternalServerError({
+      cause: error,
+      local: "status controller:",
     });
   }
+}
+
+export function POST() {
+  return treatInvalidMethodError({
+    method: "POST",
+    validMethods: "GET",
+    trace: "'api/v1/status:'",
+  });
+}
+export function PUT() {
+  return treatInvalidMethodError({
+    method: "PUT",
+    validMethods: "GET",
+    trace: "'api/v1/status:'",
+  });
+}
+export function DELETE() {
+  return treatInvalidMethodError({
+    method: "DELETE",
+    validMethods: "GET",
+    trace: "'api/v1/status:'",
+  });
 }

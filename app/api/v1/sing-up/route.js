@@ -1,10 +1,16 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import User from "modules/User";
+import {
+  treatInternalServerError,
+  treatInvalidParamsError,
+  verifyUserParams,
+} from "infra/treatErrors";
 
 export async function POST(request) {
   try {
     const { username, email, password, gender } = await request.json();
+    verifyUserParams({ username, email, password, gender });
     const hash = await bcrypt.hash(password, 11);
     const user = new User({ username, email, hash, gender });
     await user.storeUser();
@@ -13,16 +19,11 @@ export async function POST(request) {
       { id: user.id, username: user.username, gender: user.gender },
       { status: 201 },
     );
-  } catch (err) {
-    if (err.message === "email") {
-      return NextResponse.json(
-        { error: "Email already exist", case: "email" },
-        { status: 500 },
-      );
+  } catch (error) {
+    if (error.message.match(/nullParams/)) {
+      const nullParams = error.message.replace("nullParams:", "");
+      return treatInvalidParamsError({ nullParams });
     }
-    return NextResponse.json(
-      { error: "Could not save the user", case: "other" },
-      { status: 500 },
-    );
+    return treatInternalServerError({ cause: error });
   }
 }

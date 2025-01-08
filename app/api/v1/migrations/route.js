@@ -2,6 +2,10 @@ import migrationRunner from "node-pg-migrate";
 import { NextResponse } from "next/server";
 import database from "infra/database";
 import { resolve } from "node:path";
+import {
+  treatInternalServerError,
+  treatInvalidMethodError,
+} from "infra/treatErrors";
 
 // eslint-disable-next-line no-unused-vars
 export async function GET(request) {
@@ -16,13 +20,14 @@ export async function GET(request) {
       direction: "up",
       migrationsTable: "pgmigrations",
     });
-    console.log("test");
     return NextResponse.json(pendingMigrations, { status: 200 });
   } catch (error) {
-    console.error(error);
-    return NextResponse.error(error);
+    return treatInternalServerError({
+      cause: error.message,
+      local: "migrations GET controller",
+    });
   } finally {
-    await client.end();
+    await client?.end();
   }
 }
 
@@ -43,9 +48,27 @@ export async function POST(request) {
     }
     return NextResponse.json(migratedMigrations, { status: 200 });
   } catch (error) {
-    console.log(error);
-    return NextResponse.error(error);
+    return treatInternalServerError({
+      cause: error,
+      local: "migrations POST controller",
+    });
   } finally {
-    client.end();
+    client?.end();
   }
+}
+
+export function PUT() {
+  return treatInvalidMethodError({
+    method: "PUT",
+    validMethods: "GET, POST",
+    trace: "api/v1/migrations",
+  });
+}
+
+export function DELETE() {
+  return treatInvalidMethodError({
+    method: "DELETE",
+    validMethods: "GET, POST",
+    trace: "api/v1/migrations",
+  });
 }
