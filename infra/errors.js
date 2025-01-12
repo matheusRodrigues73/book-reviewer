@@ -56,3 +56,21 @@ export class InvalidParamsError extends Error {
     };
   }
 }
+
+export class NotFoundError extends Error {
+  constructor(route) {
+    super(`Route api/v1/${route} not found`, { route });
+    this.name = "NotFoundError";
+    this.action = "Return to a valid route";
+    this.statusCode = 404;
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+      message: this.message,
+      action: this.action,
+      status_code: this.statusCode,
+    };
+  }
+}
